@@ -50,11 +50,11 @@ function main(): void {
 
     const programInfo = twgl.createProgramInfo(gl, [vsGLSL, fsGLSL]);
 
-    const sides = 6;
+    const sides = 10;
     const arrays = generateData(sides);
     const bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays);
     const vao = twgl.createVAOFromBufferInfo(gl, programInfo, bufferInfo);
-    console.log(vao);
+    console.log(vao); 
 
     gl.bindVertexArray(vao);
     gl.useProgram(programInfo.program);
@@ -73,9 +73,9 @@ function generateData(sides: number): twgl.Arrays {
     // Initialize the center vertex, at the origin and with white color
     positionData.push(0);
     positionData.push(0);
-    colorData.push(1);
-    colorData.push(1);
-    colorData.push(1);
+    colorData.push(0);
+    colorData.push(0);
+    colorData.push(0);
     colorData.push(1);
 
     const angleStep = 2 * Math.PI / sides;
@@ -97,7 +97,7 @@ function generateData(sides: number): twgl.Arrays {
         colorData.push(1);
 
         // Define the triangles, in counter clockwise order
-        indexData.push(0);
+        indexData.push(0); 
         indexData.push(s + 1);
         indexData.push(((s + 2) <= sides) ? (s + 2) : 1);
     }
