@@ -8,10 +8,10 @@
 
 import * as twgl from 'twgl-base.js';
 
-// Vertex Shader as a string
-const vsGLSL = `#version 300 es
-in vec4 a_position;
-in vec4 a_color;
+// Vertex Shader as a string, produces cordinate 
+const vsGLSL = `#version 300 es 
+in vec4 a_position; // x y z and w
+in vec4 a_color;  // rgba a= alpha
 
 out vec4 v_color;
 
@@ -21,7 +21,7 @@ void main() {
 }
 `;
 
-// Fragment Shader as a string
+// Fragment Shader as a string, produces a colour 
 const fsGLSL = `#version 300 es
 precision highp float;
 
@@ -31,7 +31,7 @@ out vec4 outColor;
 
 void main() {
     outColor = v_color;
-    //outColor = vec4(1, 0, 1, 1);
+    // outColor = vec4(0.3, 0.9, 0.6, 1);
 }
 `;
 
@@ -46,17 +46,18 @@ function main_twgl(): void {
         throw new Error('WebGL2 is not supported by this browser');
     }
 
-    const programInfo = twgl.createProgramInfo(gl, [vsGLSL, fsGLSL]);
+    const programInfo = twgl.createProgramInfo(gl, [vsGLSL, fsGLSL]); // todas las funciones de webgl2 en una libreria 
     //console.log(programInfo.program);
 
     // Create an object that contains the arrays with the data
     // for each of the vertices
     const arrays = generateData();
     const bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays);
-    const vao = twgl.createVAOFromBufferInfo(gl, programInfo, bufferInfo);
+    const vao = twgl.createVAOFromBufferInfo(gl, programInfo, bufferInfo); // vao= vertex array object, misma forma mismo vao, 
+    // los atribututes para cambiar de color, etc
 
-    gl.bindVertexArray(vao);
-    gl.useProgram(programInfo.program);
+    gl.bindVertexArray(vao); 
+    gl.useProgram(programInfo.program); 
 
     // compute 3 vertices for 1 triangle
     twgl.drawBufferInfo(gl, bufferInfo);
@@ -75,6 +76,8 @@ function generateData(): twgl.Arrays {
                  0.0,   0.7,
                  0.5,  -0.7,
                 -0.5,  -0.7,
+
+            
             ]),
         },
         a_color: {

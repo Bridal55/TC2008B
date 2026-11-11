@@ -51,11 +51,12 @@ function drawScene(
     // Variable to define the translation of the object
     const translation = [100, 300];
 
-    // TODO: Add the translation as another uniform
+    // TODO: Add the translation as another uniform, uniform = constant for all the vertices 
     let uniforms =
     {
         u_resolution: [gl.canvas.width, gl.canvas.height],
         u_color: [Math.random(), Math.random(), Math.random(), 1],
+        u_translation: translation,
     }
     console.log(uniforms);
 

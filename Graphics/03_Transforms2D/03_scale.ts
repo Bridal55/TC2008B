@@ -51,11 +51,11 @@ function drawScene(
     // Variable to define the translation of the object
     const translation = [240, 150];
     // Variables for the rotation
-    const angleDegrees = 30;
+    const angleDegrees = 0;
     const angleRadians = angleDegrees * Math.PI / 180.0;
     const rotation = [Math.cos(angleRadians), Math.sin(angleRadians)];
     // Scale factors in X and Y
-    const scale = [2.3, 0.6];
+    const scale = [1, 1];
 
     let uniforms =
     {

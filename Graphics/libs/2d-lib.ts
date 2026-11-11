@@ -6,6 +6,8 @@
  * 2026-07-13
  */
 
+import { SingleFieldList } from "react-admin";
+
 // Constants to simplify references to the X, Y and Z axis
 const X = 0;
 const Y = 1;
@@ -57,25 +59,33 @@ export class M3 {
     // transformation matrix
 
     static translation(v: Vec2): Mat3 {
+        let Tx = v[X];
+        let Ty= v[Y];
         return [
             1,  0,  0,
             0,  1,  0,
-            0,  0,  1,
+            Tx,  Ty,  1,
         ];
     }
 
     static rotation(angleRadians: number): Mat3 {
+        const cos = Math.cos(angleRadians);
+        const sin = Math.sin(angleRadians);
+
         return [
-            1,  0,  0,
-            0,  1,  0,
-            0,  0,  1,
-        ];
-    }
+            cos,  sin, 0,
+            -sin,  cos, 0,
+            0,  0, 1,
+    ];
+}
 
     static scale(v: Vec2): Mat3 {
+        let Sx = v[X]
+        let Sy = v[Y]
         return [
-            1,  0,  0,
-            0,  1,  0,
+        
+            Sx,  0,  0,
+            0,  Sy,  0,
             0,  0,  1,
         ];
     }
@@ -101,22 +111,38 @@ export class M3 {
         const b21 = b[2 * 3 + 1];
         const b22 = b[2 * 3 + 2];
 
+
         /*
         // Matrix guide:
         // Consider the rows and columns are transposed
-        a00 a01 a02            b00 b01 b02
+        a00 a01 a02            b00 b01 b02        
         a10 a11 a12            b10 b11 b12
         a20 a21 a22            b20 b21 b22
+
+        a  d  g                j  m  p 
+        b  e  h                k  n  q
+        c  f  i                l  o  r 
         */
 
         // The matrices are oriented transposed, so the multiplication
-        // must be adjusted accordingly
+        // must be adjusted accordingly, se transpone otra vez por esto B^T * A^T = (AB)^T este fue el return
+
+
+
 
         return [
-            1,  0,  0,
-            0,  1,  0,
-            0,  0,  1,
+            a00 * b00 + a10 * b01 + a20 * b02,  
+            a01 * b00 + a11 * b01 + a21 * b02, 
+            a02 * b00 + a12 * b01 + a22 * b02, 
+            a00 * b10 + a10 * b11 + a20 * b12, 
+            a01 * b10 + a11 * b11 + a21 * b12,
+            a02 * b10 + a12 * b11 + a22 * b12,  
+            a00 * b20 + a10 * b21 + a20 * b22,
+            a01 * b20 + a11 * b21 + a21 * b22,
+            a02 * b20 + a12 * b21 + a22 * b22,
         ];
+        
     }
+
 
 }
